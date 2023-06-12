@@ -1,0 +1,15 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    {{title}}
+{% endblock %}
+
+{% block body %}
+{% autoescape off %}{{ body }}{% endautoescape %}
+<form action="{% url 'encyclopedia:edit' %}" method="post">
+    {% csrf_token %}
+    <input type="hidden" name="title" value="{{title}}">
+    <button type="submit" style="margin-top: 20px; border: none; background-color: #f44336; color: #3c4043; height: 36px;
+    min-width: 54px; text-align: center; border: 1px solid #f8f9fa; border-radius: 4px; font-family: arial,sans-serif;">Edit</button>
+</form>
+{% endblock %}

@@ -1,0 +1,73 @@
+input[type=text]{
+    width: 52.5%;
+    text-align: left;
+    border-radius: 1px;
+    border: 1px solid #d9d9d9;
+    border-top: 1px solid #c0c0c0;
+    font-size: 13px;
+    height: 25px;
+    padding: 1px 8px;
+    position: left;
+    margin-top: 20px;
+}
+
+input[type=number]{
+    width: 23%;
+    text-align: left;
+    border-radius: 1px;
+    border: 1px solid #d9d9d9;
+    border-top: 1px solid #c0c0c0;
+    font-size: 13px;
+    height: 25px;
+    padding: 1px 8px;
+    position: left;
+    margin-top: 20px;
+}
+
+body {
+    padding: auto;
+    margin-left: 10px;
+    font-family: arial,sans-serif;
+    color: #333
+}
+
+table {
+    margin-left: 9.3%;
+    margin-top: 5%;
+    width: 100%;
+}
+
+input[type=submit] {
+    border: 1px solid #3079ed;
+    color: #fff;
+    box-shadow: none;
+    background-color: #4d90fe;
+    background-image: -webkit-linear-gradient(top,#4d90fe,#4787ed);
+    border-radius: 2px;
+    cursor: default;
+    font-size: 11px;
+    font-weight: bold;
+    text-align: center;
+    white-space: nowrap;
+    margin-left: 70%;
+    margin-top: 20px;
+}
+
+label#waldo {
+    margin-left:10px;
+    margin: 25px 35px;
+    color: #f28b82;
+    color: #d93025;
+    font-size: 20px;
+
+}
+
+div.plugh {
+    margin-top: 20px;
+    margin-left: 5px;
+    margin-bottom: 10px;
+}
+
+tr {
+    margin-top: 20px;
+}

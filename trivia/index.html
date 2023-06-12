@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+        <link href="styles.css" rel="stylesheet">
+        <title>Trivia!</title>
+        <script>
+            // TODO: Add code to check answers to questions
+            document.addEventListener('DOMContentLoaded', function() {
+
+                //MCQ answer check
+                document.querySelector('.correct').addEventListener('click', function() {
+                    document.querySelector('.correct').style.backgroundColor = '#66FF99';
+                    document.querySelector('.incorrect1').style.backgroundColor = '#d9edff';
+                    document.querySelector('.incorrect2').style.backgroundColor = '#d9edff';
+                    document.querySelector('.incorrect3').style.backgroundColor = '#d9edff';
+                    document.querySelector('#para1').innerHTML = `Correct!`;
+                });
+
+                document.querySelector('.incorrect1').addEventListener('click', function() {
+                    document.querySelector('.incorrect1').style.backgroundColor = '#FFCCCB';
+                    document.querySelector('.incorrect2').style.backgroundColor = '#d9edff';
+                    document.querySelector('.incorrect3').style.backgroundColor = '#d9edff';
+                    document.querySelector('.correct').style.backgroundColor = '#d9edff'
+                    document.querySelector('#para1').innerHTML = `Incorrect`;
+                });
+                document.querySelector('.incorrect2').addEventListener('click', function() {
+                    document.querySelector('.incorrect2').style.backgroundColor = '#FFCCCB';
+                    document.querySelector('.incorrect1').style.backgroundColor = '#d9edff';
+                    document.querySelector('.incorrect3').style.backgroundColor = '#d9edff';
+                    document.querySelector('.correct').style.backgroundColor = '#d9edff';
+                    document.querySelector('#para1').innerHTML = `Incorrect`;
+                });
+                document.querySelector('.incorrect3').addEventListener('click', function() {
+                    document.querySelector('.incorrect3').style.backgroundColor = '#FFCCCB';
+                    document.querySelector('.incorrect1').style.backgroundColor = '#d9edff';
+                    document.querySelector('.incorrect2').style.backgroundColor = '#d9edff';
+                    document.querySelector('.correct').style.backgroundColor = '#d9edff';
+                    document.querySelector('#para1').innerHTML = `Incorrect`;
+                });
+
+                //free responce answer check
+                document.querySelector('#answer').addEventListener('click', function() {
+                    let input = document.querySelector('input');
+                    if (input.value.toLowerCase() === "cascading style sheets") {
+                        input.style.backgroundColor = '#66FF99';
+                        document.querySelector("#para2").innerHTML = `Correct!`;
+                    } else {
+                        input.style.backgroundColor = '#FFCCCB';
+                        document.querySelector('#para2').innerHTML = `Incorrect!`;
+                    }
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <div class="header">
+            <h1>Trivia!</h1>
+        </div>
+
+        <div class="container">
+            <div class="section">
+                <h2>Part 1: Multiple Choice </h2>
+                <hr>
+                <!-- TODO: Add multiple choice question here -->
+                <h3><b><i>Which of the following is an example of a programming language?</i></b></h3>
+                <p id="para1"></p>
+                <button type="button" class="incorrect1">HTML</button>
+                <button type="button" class="incorrect2">CSS</button>
+                <button type="button" class="correct">Java Script</button>
+                <button type="button" class="incorrect3">XML</button>
+            </div>
+
+            <div class="section">
+                <h2>Part 2: Free Response</h2>
+                <hr>
+                <!-- TODO: Add free response question here -->
+                <h3><b><i>What exactly is CSS stand for?</i></b></h3>
+                <p id="para2"></p>
+                <input type="text">
+                <button type="button" id="answer">Check answer</button>
+
+            </div>
+        </div>
+    </body>
+</html>

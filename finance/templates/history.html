@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    History
+{% endblock %}
+
+{% block main %}
+
+   <table>
+    <thead>
+        <tr>
+            <th>Symbol</th>
+            <th>Name</th>
+            <th>Number of shares </th>
+            <th>Action</th>
+            <th>Share price</th>
+            <th>Transacted</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        <!-- TODO: Loop through the database entries to display them in this table -->
+
+        {% for raw in table %}
+            <tr>
+                <td>{{raw.symbol}}</td>
+                <td>{{raw.name}}</td>
+                <td>{{raw.s_num}}</td>
+                <td>{{raw.action}}</td>
+                <td>{{raw.price | usd}}</td>
+                <td>{{raw.timestamp}}</td>
+
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

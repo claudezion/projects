@@ -1,0 +1,18 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    Edit
+{% endblock %}
+
+{% block body %}
+
+<h2 style="margin-top: 20px; margin-bottom: 20px; text-align: left; font-size: 150%;">Create a new page</h2>
+<form action="{% url 'encyclopedia:re_new' %}" method="post">
+    {% csrf_token %}
+    <input  style="width: 200px; height: 44px; text-indent: 5px; margin-bottom: 20px;" type="text" name="title" placeholder="Title:" value="{{title}}"><br>
+    <textarea style="width: 800px; height: 400px; text-indent: 5px; margin-bottom: 20px;" name="content" rows="4" cols="50" placeholder="Content:">{{body}}</textarea><br>
+    <button type="submit" style="background-color: #4CAF50; border: none; color: #3c4043;height: 36px;
+    min-width: 54px; text-align: center; border: 1px solid #f8f9fa; border-radius: 4px; font-family: arial,sans-serif;">Submit</button>
+</form>
+
+{% endblock %}
