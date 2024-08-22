@@ -1,0 +1,177 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+    {% for listing in listings %}
+        {% if listing.status == "False" %}
+                    {% if user.id == listing.user_id %}
+                            <center><h2>{{ listing.title }}</h2></center>
+                                    <div class="row" style="padding-left: 150px; padding-right: 150px; padding-top: 50px; padding-bottom: 50px;">
+                                        <div class="column">
+                                            <a href="{% url 'listing' id=listing.id %}" style="text-decoration: none; color: #000;" >
+                                            <img src="{{ listing.url }}" alt="Image not available" style="width:450px;height:450px;">
+                                            </a>
+                                        </div>
+                                        <div class="column">
+                                            <a href="{% url 'listing' id=listing.id %}" style="text-decoration: none; color: #000;" >{{ listing.title }}</a>
+                                            <hr>
+                                                <h3>You have closed this listing</h3>
+                                            <hr>
+                                            <h3>The highest bid for this item is ${{ listing.current_bid }}</h3>
+                                            <hr>
+                                        </div>
+                                    </div>
+                                    <hr>
+                    {% elif user.id == listing.current_bid_user_id %}
+                            <center><h2>{{ listing.title }}</h2></center>
+                            <div class="row" style="padding-left: 150px; padding-right: 150px; padding-top: 50px; padding-bottom: 50px;">
+                                <div class="column">
+                                    <a href="{% url 'listing' id=listing.id %}" style="text-decoration: none; color: #000;" >
+                                    <img src="{{ listing.url }}" alt="Image not available" style="width:450px;height:450px;">
+                                    </a>
+                                </div>
+                                <div class="column">
+                                    <a href="{% url 'listing' id=listing.id %}" style="text-decoration: none; color: #000;" >{{ listing.title }}</a>
+                                    <hr>
+                                        <h3>This listing has been closed</h3>
+                                    <hr>
+                                    <h3>you have won this item for ${{ listing.current_bid }}</h3>
+                                    <hr>
+                                </div>
+                            </div>
+                            <hr>
+                    {% else %}
+                            <center><h1>This listing has been closed by the seller</h1></center>
+                    {% endif %}
+        {% else %}
+                    {% if user.id == listing.user_id %}
+                    <center><h2>{{ listing.title }}</h2></center>
+                    <div class="row" style="padding-left: 150px; padding-right: 150px; padding-top: 50px; padding-bottom: 50px;">
+                        <div class="column">
+                            <a href="{% url 'listing' id=listing.id %}" style="text-decoration: none; color: #000;" >
+                            <img src="{{ listing.url }}" alt="Image not available" style="width:450px;height:450px;">
+                            </a>
+                        </div>
+                        <div class="column">
+                            {{ listing.title }}
+                                <hr>
+                                Description:<br>{{ listing.description }}
+                                <hr>
+                                Category: {{ listing.category }}
+                                <hr>
+                                starting bid: ${{ listing.starting_bid }}
+                                <hr>
+                                Current bid: ${{ listing.current_bid }}
+                                <hr>
+                                <form action="{% url 'close' %}" method="post">
+                                    {% csrf_token %}
+                                        <input type="hidden" value="{{ listing.id }}" name="item_id">
+                                        <center><input type="submit" value="Close Listing" style="width: 120px; height: 30px; border-radius: 5px; border: none; margin-top: 20px; color: fff; background-color: #62c6b0;"></center>
+                                    </form>
+                                </div>
+                    </div>
+                    <hr>
+                    <div class="row" style="padding-left: 150px; padding-right: 150px; padding-top: 50px; padding-bottom: 50px;">
+                        <div class="column">
+                        {% if not comments %}
+                            <center><h4 style="margin-left: 200px; color: red;">No comments yet.</h4></center>
+                        {% else %}
+                        <center><h3 style="margin-bottom: 10px;">Comments</h3></center>
+                                {% for x in comments %}
+                                <i style="margin-left: 100px;">{{x.user_name}}</i> commented {{x.comment}} on {{x.date}}
+                                    <hr>
+                                {% endfor %}
+                        {% endif %}
+                    </div>
+                    <div class="column">
+                        <center><h3 style="margin-bottom: 10px;">Bid History</h3></center>
+                        {% if not logs %}
+                            <center><h4 style="margin-left: 200px; color: red;">No comments yet.</h4></center>
+                        {% else %}
+                                {% for bid in logs%}
+                                <i style="margin-left: 150px;">{{bid.user_name}}</i> bid ${{bid.bid}} on {{bid.date}}
+                                    <hr>
+                                {% endfor %}
+                        {% endif %}
+                    </div>
+                    {% else %}
+                        <center><h2>{{ listing.title }}</h2></center>
+                        <div class="row" style="padding-left: 150px; padding-right: 150px; padding-top: 50px; padding-bottom: 50px;">
+                            <div class="column">
+                                <img src="{{ listing.url }}" alt="Image not available" style="width:450px;height:450px;">
+                            </div>
+                            <div class="column">
+                                {{ listing.title }}
+                                <hr>
+                                Description:<br>{{ listing.description }}
+                                <hr>
+                                Category: {{ listing.category }}
+                                <hr>
+                                starting bid: ${{ listing.starting_bid }}
+                                <hr>
+                                Current bid: ${{ listing.current_bid }}
+                                <hr>
+                                {% if user.is_authenticated %}
+                                    <div style="float:left;">
+                                    <form action="{% url 'listing' id=listing.id %}" method="post">
+                                        {% csrf_token %}
+                                        <input type="hidden" value="{{ user.username }}" name="user_name">
+                                        <input type="hidden" value="{{ user.id }}" name="user_id">
+                                        <input type="hidden" value="{{ listing.starting_bid }}" name="starting_bid">
+                                        <input type="hidden" value="{{ listing.current_bid }}" name="current_bid">
+                                        <input type="hidden" value="{{ listing.title }}" name="title">
+                                        <input type="text" name="bid" placeholder="Your Bidding:" style="width: 200px; height: 30px; border-radius: 5px; border: none; margin-top: 20px;">
+                                        <input type="submit" value="Bid" style="width: 120px; height: 30px; border-radius: 5px; border: none; margin-top: 20px; color: fff; background-color: #4d90fe;">
+                                    </form>
+                                    </div>
+                                    <div style="display:inline-block;">
+                                    <form action="{% url 'watchlist' %}" method="post">
+                                        {% csrf_token %}
+                                        <input type="hidden" value="{{ listing.id }}" name="item_id">
+                                        <input type="hidden" value="{{ user.id }}" name="user_id">
+                                        <input type="hidden" value="{{ listing.title }}" name="title">
+                                        <input type="submit" value="Watchlist" style="width: 120px; height: 30px; border-radius: 5px; border: none; margin-top: 20px; color: fff; background-color: #62c6b0; margin-left: 20px;">
+                                    </form>
+                                    </div>
+                                {% else %}
+                                <a class="nav-link" href="{% url 'login' %}"><h4 style="margin-left: 200px; color: red;"><b>Sign in to bid.</b></h4></a>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row" style="padding-left: 150px; padding-right: 150px; padding-top: 50px; padding-bottom: 50px;">
+                            <div class="column">
+                            {% if not comments %}
+                                <center><h4 style="margin-left: 200px; color: red;">No comments yet.</h4></center>
+                            {% else %}
+                            <center><h3 style="margin-bottom: 10px;">Comments</h3></center>
+                                    {% for x in comments %}
+                                    <i style="margin-left: 100px;">{{x.user_name}}</i> commented {{x.comment}} on {{x.date}}
+                                        <hr>
+                                    {% endfor %}
+                            {% endif %}
+                        </div>
+                        <div class="column">
+                            <center><h3 style="margin-bottom: 10px;">Bid History</h3></center>
+                            {% if not logs %}
+                                <center><h4 style="margin-left: 200px; color: red;">No comments yet.</h4></center>
+                            {% else %}
+                                    {% for bid in logs%}
+                                    <i style="margin-left: 150px;">{{bid.user_name}}</i> bid ${{bid.bid}} on {{bid.date}}
+                                        <hr>
+                                    {% endfor %}
+                            {% endif %}
+                        </div>
+                        <div style=" padding-right: 150px; padding-top: 20px; padding-bottom: 50px;">
+                        <form action="{% url 'comment' %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" value="{{ user.username }}" name="user_name">
+                            <input type="hidden" value="{{ listing.id }}" name="item_id">
+                            <textarea style="width: 1200px; height: 100px; text-indent: 5px; margin-top: 20px; border-radius: 5px; border: none;" name="comment" rows="4" cols="50" placeholder="comment:"></textarea>
+                            <input type="submit" style="width: 120px; height: 30px; border-radius: 5px; border: none; margin-top: 20px; color: fff; background-color: #62c6b0; margin-left: 1080px;">
+                        </form>
+                        </div>
+                    {% endif %}
+        {% endif %}
+    {% endfor %}
+{% endblock %}

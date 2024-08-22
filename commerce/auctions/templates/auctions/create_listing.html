@@ -1,0 +1,25 @@
+{% extends "auctions/layout.html" %}
+{% block title %}Create Listing{% endblock %}
+{% block body %}
+    <center><h2>Create Listing</h2></center>
+<center>
+<form action="{%url 'create_listing' %}" method="post">
+    {% csrf_token %}
+    <input type="text" name="title" placeholder="Title:" style="width: 200px; height: 30px; border-radius: 5px; border: none; margin-top: 20px;">
+    <input type="text" name="starting_bid" placeholder="Starting bid:" style="width: 200px; height: 30px; border-radius: 5px; border: none; margin-top: 20px;">
+    <br>
+    <input type="url" name="url" placeholder="Image url:" style="width: 200px; height: 30px; border-radius: 5px; border: none; margin-top: 20px;">
+    <input type="hidden" value="{{ user.id }}" name="user_id">
+    <select  name="category" style="width: 200px; height: 30px; border-radius: 5px; border: none; margin-top: 20px;">
+        <option disabled="" selected="">Categories</option>
+        {% for category in categories %}
+            <option value="{{ category.name }}">{{ category.name }}</option>
+        {% endfor %}
+    </select>
+    <br>
+    <textarea style="width: 400px; height: 200px; text-indent: 5px; margin-top: 20px; border-radius: 5px; border: none;" name="description" rows="4" cols="50" placeholder="Description:"></textarea>
+    <br>
+    <input type="submit" value="create" style="width: 120px; height: 30px; border-radius: 5px; border: none; margin-top: 20px; color: fff; background-color: #4d90fe;">
+</form>
+</center>
+{% endblock %}

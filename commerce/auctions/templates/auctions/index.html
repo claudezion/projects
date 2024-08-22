@@ -1,0 +1,24 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <center><h2>{{ head }}</h2></center>
+    {% for listing in listings %}
+    <div class="row" style="padding-left: 150px; padding-right: 150px; padding-top: 50px; padding-bottom: 50px;">
+        <div class="column">
+            <a href="{% url 'listing' id=listing.id %}" style="text-decoration: none; color: #000;" >
+            <img src="{{ listing.url }}" alt="Image not available" style="width:450px;height:450px;">
+            </a>
+        </div>
+        <div class="column">
+            <a href="{% url 'listing' id=listing.id %}" style="text-decoration: none; color: #000;" >{{ listing.title }}</a>
+            <hr>
+             Current bid: ${{ listing.current_bid }}
+            <hr>
+            Description:<br>{{ listing.description }}
+            <hr>
+            Category: {{ listing.category }}
+        </div>
+    </div>
+    <hr>
+    {% endfor %}
+{% endblock %}

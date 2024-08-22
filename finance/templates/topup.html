@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Top-up
+{% endblock %}
+
+{% block main %}
+<center>
+    <form action="/topup" method="post">
+        <div class="mb-3">
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="amount" name="amount" placeholder="Amount" type="text">
+        </div>
+        <div class="mb-3">
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="cc" name="cc" placeholder="Credit card number" type="text" required>
+        </div>
+        <b>Would you like to top-up your account:</b>
+        <select class="form-select mx-auto w-auto" name="confirm">
+            <option disabled="" selected="">---</option>
+            <option>No</option>
+            <option>Yes</option>
+        </select>
+        <button class="btn btn-primary" type="submit">Top-up</button>
+    </form>
+</center>
+{% endblock %}
